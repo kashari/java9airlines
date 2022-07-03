@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
 public class AircraftDAO implements GenericDAO<AircraftDTO>, GenericMapper<Aircraft, AircraftDTO> {
@@ -17,28 +18,32 @@ public class AircraftDAO implements GenericDAO<AircraftDTO>, GenericMapper<Aircr
 
     @Override
     public List<AircraftDTO> findAll() {
-        return null;
+        return aircraftRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     @Override
     public AircraftDTO findById(Long id) {
-        return null;
+        return aircraftRepository.findById(id).map(this::mapToDto).orElse(null);
     }
 
     @Override
     public void save(AircraftDTO aircraftDTO) {
-
+        aircraftRepository.save(mapToEntity(aircraftDTO));
     }
 
     @Override
     public void deleteById(Long id) {
-
+        aircraftRepository.deleteById(id);
     }
 
     @Override
     public Aircraft mapToEntity(AircraftDTO aircraftDTO) {
         Aircraft aircraft = new Aircraft();
         // map using getters and setters
+        aircraft.setId(aircraftDTO.getId());
+        aircraft.setMake(aircraftDTO.getMake());
+        aircraft.setModel(aircraftDTO.getModel());
+        aircraft.setCapacity(aircraftDTO.getCapacity());
         return aircraft;
     }
 
@@ -46,6 +51,10 @@ public class AircraftDAO implements GenericDAO<AircraftDTO>, GenericMapper<Aircr
     public AircraftDTO mapToDto(Aircraft aircraft) {
         AircraftDTO aircraftDTO = new AircraftDTO();
         // map using getters and setters
+        aircraftDTO.setId(aircraft.getId());
+        aircraftDTO.setMake(aircraft.getMake());
+        aircraftDTO.setModel(aircraft.getModel());
+        aircraftDTO.setCapacity(aircraft.getCapacity());
         return aircraftDTO;
     }
 }
