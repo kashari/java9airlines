@@ -5,6 +5,8 @@ import com.sda.java9.finalproject.model.PassengerType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter @Setter
 public class PassengerDTO {
     private Long id;
@@ -13,7 +15,7 @@ public class PassengerDTO {
     private String lastName;
     private String address;
     private String passportCode;
-    private Flight flight;
+    private Set<Flight> flights;
     private PassengerType passengerType;
 
 }

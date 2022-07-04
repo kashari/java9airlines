@@ -1,13 +1,18 @@
 package com.sda.java9.finalproject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity @Getter @Setter
 public class Passenger {
+
+    // TODO: needs refactoring in both this entity and the Passenger one about the relationship between them
+
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,9 +22,8 @@ public class Passenger {
     private String address;
     private String passportCode;
 
-    @ManyToOne @JoinColumn(name = "flight_id")
-    @JsonIgnore
-    private Flight flight;
+    @ManyToMany(mappedBy = "passengers") @JsonIgnore
+    private Set<Flight> flights;
 
     @Enumerated(EnumType.STRING)
     private PassengerType passengerType;

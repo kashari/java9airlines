@@ -1,33 +1,24 @@
-package com.sda.java9.finalproject.model;
+package com.sda.java9.finalproject.dto;
 
+import com.sda.java9.finalproject.model.Airport;
+import com.sda.java9.finalproject.model.FlightClass;
+import com.sda.java9.finalproject.model.Passenger;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Entity @Getter @Setter
-public class Flight {
+@Getter @Setter
+public class FlightDTO  {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private int capacity;
-
-    @ManyToOne
     private Airport departureAirport;
-    @ManyToOne
     private Airport arrivalAirport;
-
     private Date departureDate;
     private Date arrivalDate;
-
-    @ManyToMany
     private Set<Passenger> passengers;
-
-    @Enumerated(EnumType.STRING)
     private FlightClass flightClass;
-
     private double flightPrice;
 }
