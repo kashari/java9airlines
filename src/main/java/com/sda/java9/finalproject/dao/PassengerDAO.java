@@ -44,8 +44,8 @@ public class PassengerDAO implements GenericDAO<PassengerDTO>, GenericMapper<Pas
         passenger.setLastName(passengerDTO.getLastName());
         passenger.setAddress(passengerDTO.getAddress());
         passenger.setPassportCode(passengerDTO.getPassportCode());
-        passenger.setFlights(passengerDTO.getFlights());
         passenger.setPassengerType(passengerDTO.getPassengerType());
+        passenger.setFlights(passengerDTO.getFlights());
         return passenger;
     }
 
@@ -57,8 +57,8 @@ public class PassengerDAO implements GenericDAO<PassengerDTO>, GenericMapper<Pas
         passengerDTO.setLastName(passenger.getLastName());
         passengerDTO.setAddress(passenger.getAddress());
         passengerDTO.setPassportCode(passenger.getPassportCode());
-        passengerDTO.setFlights(passenger.getFlights());
         passengerDTO.setPassengerType(passenger.getPassengerType());
+        passengerDTO.setFlights(passenger.getFlights());
         return passengerDTO;
     }
 }

@@ -38,8 +38,8 @@ public class FlightDAO implements GenericDAO<FlightDTO>, GenericMapper<Flight, F
     }
 
     // TODO: method that returns the result set from the native query.
-    public List<FlightDTO> getResultFromNativeQuery(Long departureAirportId, Long arrivalAirportId, Date departureDate, Date arrivalDate){
-        return flightRepository.fullSearchFlights(departureAirportId, arrivalAirportId, departureDate, arrivalDate)
+    public List<FlightDTO> getResultFromNativeQuery(String departureAirportId, String arrivalAirportId, String departureDate){
+        return flightRepository.fullSearchFlights(departureAirportId, arrivalAirportId, departureDate)
                 .stream().map(this::mapToDto).collect(Collectors.toList());
     }
 

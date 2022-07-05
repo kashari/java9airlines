@@ -18,12 +18,6 @@ public class FlightController {
         return flightService.findAll();
     }
 
-    // TODO: method that returns the list with filtered flights but need to pass some request params or path variables lets see
-    @GetMapping("/filter")
-    public List<FlightDTO> findFilteredFlights(@RequestParam Long departureAirportId, @RequestParam Long arrivalAirportId, @RequestParam Date departureDate, @RequestParam Date arrivalDate){
-        return flightService.findFilteredFlights(departureAirportId, arrivalAirportId, departureDate, arrivalDate);
-    }
-
     @GetMapping("/{id}")
     public FlightDTO findById(@PathVariable("id") Long id){
         return flightService.findById(id);
@@ -42,7 +36,7 @@ public class FlightController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteById(Long id){
+    public String deleteById(@PathVariable("id") Long id){
         return flightService.deleteById(id);
     }
 }

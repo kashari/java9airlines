@@ -2,6 +2,7 @@ package com.sda.java9.finalproject.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,11 +21,10 @@ public class Flight {
     @ManyToOne
     private Airport arrivalAirport;
 
-    private Date departureDate;
-    private Date arrivalDate;
-
-    @ManyToMany
+    @ManyToMany(mappedBy = "flights", cascade = CascadeType.ALL) @JsonIgnore
     private Set<Passenger> passengers;
+
+    private Date departureDate;
 
     @Enumerated(EnumType.STRING)
     private FlightClass flightClass;
