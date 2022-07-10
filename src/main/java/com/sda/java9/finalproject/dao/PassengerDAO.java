@@ -1,64 +1,35 @@
 package com.sda.java9.finalproject.dao;
 
-import com.sda.java9.finalproject.dto.PassengerDTO;
 import com.sda.java9.finalproject.generics.GenericDAO;
-import com.sda.java9.finalproject.generics.GenericMapper;
 import com.sda.java9.finalproject.model.Passenger;
 import com.sda.java9.finalproject.repository.PassengerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
-public class PassengerDAO implements GenericDAO<PassengerDTO>, GenericMapper<Passenger, PassengerDTO> {
+public class PassengerDAO implements GenericDAO<Passenger> {
 
     private final PassengerRepository passengerRepository;
 
     @Override
-    public List<PassengerDTO> findAll() {
-        return passengerRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+    public List<Passenger> findAll() {
+        return passengerRepository.findAll();
     }
 
     @Override
-    public PassengerDTO findById(Long id) {
-        return passengerRepository.findById(id).map(this::mapToDto).orElse(null);
+    public Passenger findById(Long id) {
+        return passengerRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void save(PassengerDTO passengerDTO) {
-        passengerRepository.save(mapToEntity(passengerDTO));
+    public void save(Passenger passenger) {
+        passengerRepository.save(passenger);
     }
 
     @Override
     public void deleteById(Long id) {
         passengerRepository.deleteById(id);
-    }
-
-    @Override
-    public Passenger mapToEntity(PassengerDTO passengerDTO) {
-        Passenger passenger = new Passenger();
-        passenger.setId(passengerDTO.getId());
-        passenger.setFirstName(passengerDTO.getFirstName());
-        passenger.setLastName(passengerDTO.getLastName());
-        passenger.setAddress(passengerDTO.getAddress());
-        passenger.setPassportCode(passengerDTO.getPassportCode());
-        passenger.setPassengerType(passengerDTO.getPassengerType());
-        passenger.setFlights(passengerDTO.getFlights());
-        return passenger;
-    }
-
-    @Override
-    public PassengerDTO mapToDto(Passenger passenger) {
-        PassengerDTO passengerDTO = new PassengerDTO();
-        passengerDTO.setId(passenger.getId());
-        passengerDTO.setFirstName(passenger.getFirstName());
-        passengerDTO.setLastName(passenger.getLastName());
-        passengerDTO.setAddress(passenger.getAddress());
-        passengerDTO.setPassportCode(passenger.getPassportCode());
-        passengerDTO.setPassengerType(passenger.getPassengerType());
-        passengerDTO.setFlights(passenger.getFlights());
-        return passengerDTO;
     }
 }

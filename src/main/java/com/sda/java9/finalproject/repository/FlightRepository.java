@@ -6,18 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
-
-    // running a native SQL query to perform a complex search and implement passenger capacity logic in the service
     @Query(value = "SELECT * FROM flight WHERE " +
             "departure_airport_id=:departureAirportId" +
             " AND arrival_airport_id=:arrivalAirportId" +
-            " AND departure_date=:departureDate", nativeQuery = true)
+            " OR departure_date=:departureDate", nativeQuery = true)
     List<Flight> fullSearchFlights(@Param("departureAirportId") String departureAirportId,
                                    @Param("arrivalAirportId") String arrivalAirportId,
                                    @Param("departureDate") String departureDate);

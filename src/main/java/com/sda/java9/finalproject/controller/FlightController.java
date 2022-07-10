@@ -1,38 +1,38 @@
 package com.sda.java9.finalproject.controller;
 
-import com.sda.java9.finalproject.dto.FlightDTO;
+import com.sda.java9.finalproject.model.Flight;
 import com.sda.java9.finalproject.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
-@RestController @RequestMapping("/flights") @RequiredArgsConstructor
+
+@RestController @RequestMapping("/flights") @RequiredArgsConstructor @CrossOrigin("http://localhost:4200")
 public class FlightController {
 
     private final FlightService flightService;
 
     @GetMapping
-    public List<FlightDTO> findAll(){
+    public List<Flight> findAll(){
         return flightService.findAll();
     }
 
     @GetMapping("/{id}")
-    public FlightDTO findById(@PathVariable("id") Long id){
+    public Flight findById(@PathVariable("id") Long id){
         return flightService.findById(id);
     }
 
     @PostMapping
-    public FlightDTO save(FlightDTO flightDTO){
-        flightService.save(flightDTO);
-        return flightDTO;
+    public Flight save(@RequestBody Flight flight){
+        flightService.save(flight);
+        return flight;
     }
 
     @PutMapping
-    public FlightDTO update(FlightDTO flightDTO){
-        flightService.save(flightDTO);
-        return flightDTO;
+    public Flight update(@RequestBody Flight flight){
+        flightService.save(flight);
+        return flight;
     }
 
     @DeleteMapping("/{id}")

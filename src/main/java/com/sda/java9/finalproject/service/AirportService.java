@@ -1,7 +1,7 @@
 package com.sda.java9.finalproject.service;
 
 import com.sda.java9.finalproject.dao.AirportDAO;
-import com.sda.java9.finalproject.dto.AirportDTO;
+import com.sda.java9.finalproject.model.Airport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +12,17 @@ public class AirportService {
 
     private final AirportDAO airportDAO;
 
-    public List<AirportDTO> findAll() {
+    public List<Airport> findAll() {
         return airportDAO.findAll();
     }
 
 
-    public AirportDTO findById(Long id) {
+    public Airport findById(Long id) {
         return airportDAO.findById(id);
     }
 
-    public void save(AirportDTO airportDTO) {
-        airportDAO.save(airportDTO);
+    public void save(Airport airport) {
+        airportDAO.save(airport);
     }
 
     public String deleteById(Long id) {

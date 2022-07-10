@@ -1,37 +1,37 @@
 package com.sda.java9.finalproject.controller;
 
-import com.sda.java9.finalproject.dto.AirportDTO;
+import com.sda.java9.finalproject.model.Airport;
 import com.sda.java9.finalproject.service.AirportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController @RequestMapping("/airports") @RequiredArgsConstructor
+@RestController @RequestMapping("/airports") @RequiredArgsConstructor @CrossOrigin("http://localhost:4200")
 public class AirportController {
 
     private final AirportService airportService;
 
     @GetMapping
-    public List<AirportDTO> findAll(){
+    public List<Airport> findAll(){
         return airportService.findAll();
     }
 
     @GetMapping("/{id}")
-    public AirportDTO findById(Long id){
+    public Airport findById(Long id){
         return airportService.findById(id);
     }
 
     @PostMapping
-    public AirportDTO save(@RequestBody AirportDTO airportDTO){
-        airportService.save(airportDTO);
-        return airportDTO;
+    public Airport save(@RequestBody Airport airport){
+        airportService.save(airport);
+        return airport;
     }
 
     @PutMapping
-    public AirportDTO update(@RequestBody AirportDTO airportDTO){
-        airportService.save(airportDTO);
-        return airportDTO;
+    public Airport update(@RequestBody Airport airport){
+        airportService.save(airport);
+        return airport;
     }
 
     @DeleteMapping("/{id}")

@@ -1,14 +1,15 @@
 package com.sda.java9.finalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
-@Entity @Getter @Setter
+@Entity @Getter @Setter @NoArgsConstructor
 public class Flight {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +22,15 @@ public class Flight {
     @ManyToOne
     private Airport arrivalAirport;
 
-    @ManyToMany(mappedBy = "flights", cascade = CascadeType.ALL) @JsonIgnore
-    private Set<Passenger> passengers;
+    @JsonIgnore @OneToMany(mappedBy = "flight", fetch=FetchType.LAZY) @JsonManagedReference
+    private Set<Booking> bookings = new HashSet<>();
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date departureDate;
 
     @Enumerated(EnumType.STRING)
     private FlightClass flightClass;
 
     private double flightPrice;
+
 }
