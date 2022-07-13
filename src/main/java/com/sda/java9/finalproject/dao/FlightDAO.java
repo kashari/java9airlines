@@ -33,8 +33,11 @@ public class FlightDAO implements GenericDAO<Flight> {
         flightRepository.deleteById(id);
     }
 
-    // TODO: method that returns the result set from the native query.
     public List<Flight> getResultFromNativeQuery(String departureAirportId, String arrivalAirportId, String departureDate){
-        return flightRepository.fullSearchFlights(departureAirportId, arrivalAirportId, departureDate);
+        return flightRepository.oneDirectionalFlights(departureAirportId, arrivalAirportId, departureDate);
+    }
+
+    public List<Flight> findFlightsBySuperQuery(String departureAirportId, String arrivalAirportId, String departureDate, String returnDate) {
+        return flightRepository.biDirectionalFlights(departureAirportId, arrivalAirportId, departureDate, returnDate);
     }
 }

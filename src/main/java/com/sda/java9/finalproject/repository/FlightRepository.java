@@ -15,7 +15,17 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             "departure_airport_id=:departureAirportId" +
             " AND arrival_airport_id=:arrivalAirportId" +
             " OR departure_date=:departureDate", nativeQuery = true)
-    List<Flight> fullSearchFlights(@Param("departureAirportId") String departureAirportId,
+    List<Flight> oneDirectionalFlights(@Param("departureAirportId") String departureAirportId,
                                    @Param("arrivalAirportId") String arrivalAirportId,
                                    @Param("departureDate") String departureDate);
+
+    @Query(value = "SELECT * FROM flight WHERE " +
+            "departure_airport_id=:departureAirportId" +
+            " AND arrival_airport_id=:arrivalAirportId" +
+            " AND departure_date=:departureDate AND" +
+            " return_date=:returnDate", nativeQuery = true)
+    List<Flight> biDirectionalFlights(@Param("departureAirportId") String departureAirportId,
+                                      @Param("arrivalAirportId") String arrivalAirportId,
+                                      @Param("departureDate") String departureDate,
+                                      @Param("returnDate") String returnDate);
 }

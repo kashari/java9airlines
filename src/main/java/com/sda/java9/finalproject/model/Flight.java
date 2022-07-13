@@ -1,10 +1,10 @@
 package com.sda.java9.finalproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.*;
@@ -17,6 +17,8 @@ public class Flight {
 
     private int capacity;
 
+    private boolean biDirectional;
+
     @ManyToOne
     private Airport departureAirport;
     @ManyToOne
@@ -27,6 +29,10 @@ public class Flight {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date departureDate;
+
+    // only if the flight is bidirectional
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date returnDate;
 
     @Enumerated(EnumType.STRING)
     private FlightClass flightClass;
