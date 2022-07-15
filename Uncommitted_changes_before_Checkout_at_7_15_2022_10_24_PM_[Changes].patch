@@ -1,0 +1,50 @@
+Index: .idea/java9airlines.iml
+===================================================================
+diff --git a/.idea/java9airlines.iml b/.idea/java9airlines.iml
+--- a/.idea/java9airlines.iml	
++++ b/.idea/java9airlines.iml	
+@@ -22,7 +22,7 @@
+       <configuration />
+     </facet>
+   </component>
+-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_18">
++  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_X">
+     <output url="file://$MODULE_DIR$/target/classes" />
+     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+     <content url="file://$MODULE_DIR$">
+Index: pom.xml
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	
++++ b/pom.xml	
+@@ -50,7 +50,11 @@
+ 			<artifactId>springdoc-openapi-ui</artifactId>
+ 			<version>1.6.4</version>
+ 		</dependency>
+-	</dependencies>
++        <dependency>
++            <groupId>org.projectlombok</groupId>
++            <artifactId>lombok</artifactId>
++        </dependency>
++    </dependencies>
+ 
+ 	<build>
+ 		<plugins>
+Index: .idea/misc.xml
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -7,7 +7,10 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_18" project-jdk-name="openjdk-18" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="openjdk-18" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
++  <component name="ProjectType">
++    <option name="id" value="jpab" />
++  </component>
+ </project>
+\ No newline at end of file
