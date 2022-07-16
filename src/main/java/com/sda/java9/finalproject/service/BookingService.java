@@ -3,7 +3,6 @@ package com.sda.java9.finalproject.service;
 import com.sda.java9.finalproject.dao.BookingDAO;
 import com.sda.java9.finalproject.dao.FlightDAO;
 import com.sda.java9.finalproject.model.Booking;
-import com.sda.java9.finalproject.model.Flight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class BookingService {
     }
 
     public void save(Booking booking) {
-        booking.getFlight().getBookings().add(booking);
+        booking.getPassengers().forEach(b -> {booking.getPassengers().add(b);});
         bookingDAO.save(booking);
     }
 }

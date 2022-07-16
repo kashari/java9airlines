@@ -32,4 +32,8 @@ public class BookingDAO implements GenericDAO<Booking> {
     public void deleteById(Long id) {
         bookingRepository.deleteById(id);
     }
+
+    public List<Booking> findByFlightId(Long id){
+        return bookingRepository.findByFlightId(id);
+    }
 }

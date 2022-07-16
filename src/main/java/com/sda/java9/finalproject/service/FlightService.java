@@ -1,6 +1,8 @@
 package com.sda.java9.finalproject.service;
 
+import com.sda.java9.finalproject.dao.BookingDAO;
 import com.sda.java9.finalproject.dao.FlightDAO;
+import com.sda.java9.finalproject.model.Booking;
 import com.sda.java9.finalproject.model.Flight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 public class FlightService {
 
     private final FlightDAO flightDAO;
+    private final BookingDAO bookingDAO;
 
     public List<Flight> findAll() {
         return flightDAO.findAll();
@@ -35,8 +38,10 @@ public class FlightService {
 
     public List<Flight> findFlightsOneDirectional(String departureAirportId, String arrivalAirportId, String departureDate) {
         return flightDAO.getResultFromNativeQuery(departureAirportId, arrivalAirportId, departureDate)
-                .stream().filter(flight -> flight.getCapacity() > flight.getBookings().size())
-                .collect(Collectors.toList());
+                .stream().filter(f -> bookingDAO.findByFlightId(f.getId()).stream().flatMap(booking -> booking.getPassengers()
+                        .stream()).collect(Collectors.toSet())
+                        .size() < f.getCapacity())
+                        .collect(Collectors.toList());
     }
 
     /*
@@ -46,8 +51,12 @@ public class FlightService {
           in both of these methods + the validation if the user requests a return date but the date is null
           we should return an exception or error message ... plus the security and booking part
     */
+
     public List<Flight> findFlightsBiDirectional(String departureAirportId, String arrivalAirportId, String departureDate, String returnDate) {
         return flightDAO.findFlightsBySuperQuery(departureAirportId, arrivalAirportId, departureDate, returnDate)
-                .stream().filter(flight -> flight.getCapacity() > flight.getBookings().size()).collect(Collectors.toList());
+                .stream().filter(f ->
+                                bookingDAO.findByFlightId(f.getId()).stream().flatMap(b -> b.getPassengers().stream())
+                                        .collect(Collectors.toSet())
+                                        .size() < f.getCapacity()).collect(Collectors.toList());
     }
 }

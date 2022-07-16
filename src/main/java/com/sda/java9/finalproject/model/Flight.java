@@ -1,7 +1,5 @@
 package com.sda.java9.finalproject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,13 +17,11 @@ public class Flight {
 
     private boolean biDirectional;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Airport departureAirport;
-    @ManyToOne
-    private Airport arrivalAirport;
 
-    @JsonIgnore @OneToMany(mappedBy = "flight", fetch=FetchType.LAZY) @JsonManagedReference
-    private Set<Booking> bookings = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Airport arrivalAirport;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date departureDate;
