@@ -1,6 +1,6 @@
 package com.sda.java9.finalproject.controller;
 
-import com.sda.java9.finalproject.model.Flight;
+import com.sda.java9.finalproject.dto.FlightDTO;
 import com.sda.java9.finalproject.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +14,23 @@ public class FlightController {
     private final FlightService flightService;
 
     @GetMapping
-    public List<Flight> findAll(){
+    public List<FlightDTO> findAll(){
         return flightService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Flight findById(@PathVariable("id") Long id){
+    public FlightDTO findById(@PathVariable("id") Long id){
         return flightService.findById(id);
     }
 
     @PostMapping
-    public Flight save(@RequestBody Flight flight){
+    public FlightDTO save(@RequestBody FlightDTO flight){
         flightService.save(flight);
         return flight;
     }
 
     @PutMapping
-    public Flight update(@RequestBody Flight flight){
+    public FlightDTO update(@RequestBody FlightDTO flight){
         flightService.save(flight);
         return flight;
     }

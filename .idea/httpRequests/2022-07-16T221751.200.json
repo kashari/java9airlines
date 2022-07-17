@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Vienna",
+    "airportCode": "VIE",
+    "city": "Vienna",
+    "flagUrl": "string"
+  },
+  {
+    "id": 2,
+    "name": "Tirana ",
+    "airportCode": "TIA",
+    "city": "Tirana",
+    "flagUrl": "string"
+  },
+  {
+    "id": 3,
+    "name": "Roma",
+    "airportCode": "VIE",
+    "city": "Vienna",
+    "flagUrl": "string"
+  },
+  {
+    "id": 4,
+    "name": "Milano ",
+    "airportCode": "TIA",
+    "city": "Tirana",
+    "flagUrl": "string"
+  }
+]

@@ -12,7 +12,7 @@ public class Booking {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Passenger> passengers;
 
     @ManyToOne

@@ -1,31 +1,33 @@
 package com.sda.java9.finalproject.dao;
 
+import com.sda.java9.finalproject.dto.BookingDTO;
+import com.sda.java9.finalproject.generics.AirlinesMapper;
 import com.sda.java9.finalproject.generics.GenericDAO;
-import com.sda.java9.finalproject.model.Booking;
 import com.sda.java9.finalproject.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
-public class BookingDAO implements GenericDAO<Booking> {
+public class BookingDAO implements GenericDAO<BookingDTO> {
 
     private final BookingRepository bookingRepository;
 
     @Override
-    public List<Booking> findAll() {
-        return bookingRepository.findAll();
+    public List<BookingDTO> findAll() {
+        return bookingRepository.findAll().stream().map(AirlinesMapper::mapBookingToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Booking findById(Long id) {
-        return bookingRepository.findById(id).orElse(null);
+    public BookingDTO findById(Long id) {
+        return bookingRepository.findById(id).map(AirlinesMapper::mapBookingToDTO).orElse(null);
     }
 
     @Override
-    public void save(Booking booking) {
-        bookingRepository.save(booking);
+    public void save(BookingDTO booking) {
+        bookingRepository.save(AirlinesMapper.mapBookingDTOToEntity(booking));
     }
 
     @Override
@@ -33,7 +35,7 @@ public class BookingDAO implements GenericDAO<Booking> {
         bookingRepository.deleteById(id);
     }
 
-    public List<Booking> findByFlightId(Long id){
-        return bookingRepository.findByFlightId(id);
+    public List<BookingDTO> findByFlightId(Long id){
+        return bookingRepository.findByFlightId(id).stream().map(AirlinesMapper::mapBookingToDTO).collect(Collectors.toList());
     }
 }

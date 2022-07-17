@@ -1,6 +1,6 @@
 package com.sda.java9.finalproject.controller;
 
-import com.sda.java9.finalproject.model.Passenger;
+import com.sda.java9.finalproject.dto.PassengerDTO;
 import com.sda.java9.finalproject.service.PassengerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +12,20 @@ public class PassengerController {
     private final PassengerService passengerService;
 
     @GetMapping
-    public List<Passenger> findAll(){
+    public List<PassengerDTO> findAll(){
         return passengerService.findAll();
     }
     @GetMapping("/{id}")
-    public Passenger findById(@PathVariable("id") Long id){
+    public PassengerDTO findById(@PathVariable("id") Long id){
         return passengerService.findById(id);
     }
     @PostMapping
-    public Passenger save(@RequestBody Passenger passenger){
+    public PassengerDTO save(@RequestBody PassengerDTO passenger){
         passengerService.save(passenger);
         return passenger;
     }
     @PutMapping
-    public Passenger update(@RequestBody Passenger passenger){
+    public PassengerDTO update(@RequestBody PassengerDTO passenger){
         passengerService.save(passenger);
         return passenger;
     }

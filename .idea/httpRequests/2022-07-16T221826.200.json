@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "firstName": "Andi",
+  "lastName": "string",
+  "address": "string",
+  "passportCode": "string",
+  "passengerType": "ADULT"
+}

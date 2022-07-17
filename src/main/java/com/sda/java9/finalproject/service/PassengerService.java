@@ -1,7 +1,7 @@
 package com.sda.java9.finalproject.service;
 
 import com.sda.java9.finalproject.dao.PassengerDAO;
-import com.sda.java9.finalproject.model.Passenger;
+import com.sda.java9.finalproject.dto.PassengerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +12,15 @@ public class PassengerService {
     private final PassengerDAO passengerDAO;
 
 
-    public List<Passenger> findAll() {
+    public List<PassengerDTO> findAll() {
         return passengerDAO.findAll();
     }
 
-    public Passenger findById(Long id) {
+    public PassengerDTO findById(Long id) {
         return passengerDAO.findById(id);
     }
 
-    public void save(Passenger passenger) {
+    public void save(PassengerDTO passenger) {
         passengerDAO.save(passenger);
     }
 

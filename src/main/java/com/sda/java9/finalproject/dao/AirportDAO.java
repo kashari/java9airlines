@@ -1,31 +1,33 @@
 package com.sda.java9.finalproject.dao;
 
+import com.sda.java9.finalproject.generics.AirlinesMapper;
+import com.sda.java9.finalproject.dto.AirportDTO;
 import com.sda.java9.finalproject.generics.GenericDAO;
-import com.sda.java9.finalproject.model.Airport;
 import com.sda.java9.finalproject.repository.AirportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
-public class AirportDAO implements GenericDAO<Airport> {
+public class AirportDAO implements GenericDAO<AirportDTO> {
 
     private final AirportRepository airportRepository;
 
     @Override
-    public List<Airport> findAll() {
-        return airportRepository.findAll();
+    public List<AirportDTO> findAll() {
+        return airportRepository.findAll().stream().map(AirlinesMapper::mapAirportToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Airport findById(Long id) {
-        return airportRepository.findById(id).orElse(null);
+    public AirportDTO findById(Long id) {
+        return airportRepository.findById(id).map(AirlinesMapper::mapAirportToDTO).orElse(null);
     }
 
     @Override
-    public void save(Airport airport) {
-        airportRepository.save(airport);
+    public void save(AirportDTO airport) {
+        airportRepository.save(AirlinesMapper.mapAirportDTOToEntity(airport));
     }
 
     @Override

@@ -17,17 +17,17 @@ public class Flight {
 
     private boolean biDirectional;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Airport departureAirport;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Airport arrivalAirport;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date departureDate;
 
     // only if the flight is bidirectional
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date returnDate;
 
     @Enumerated(EnumType.STRING)

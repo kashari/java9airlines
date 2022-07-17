@@ -1,9 +1,7 @@
 package com.sda.java9.finalproject.service;
 
-import com.sda.java9.finalproject.dao.BookingDAO;
 import com.sda.java9.finalproject.dao.FlightDAO;
-import com.sda.java9.finalproject.model.Booking;
-import com.sda.java9.finalproject.model.Flight;
+import com.sda.java9.finalproject.dto.FlightDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +12,16 @@ import java.util.stream.Collectors;
 public class FlightService {
 
     private final FlightDAO flightDAO;
-    private final BookingDAO bookingDAO;
 
-    public List<Flight> findAll() {
+    public List<FlightDTO> findAll() {
         return flightDAO.findAll();
     }
 
-    public Flight findById(Long id) {
+    public FlightDTO findById(Long id) {
         return flightDAO.findById(id);
     }
 
-    public void save(Flight flight) {
+    public void save(FlightDTO flight) {
         if (!flight.isBiDirectional()) {
             flight.setReturnDate(null);
         }
@@ -36,27 +33,10 @@ public class FlightService {
         return String.format("Flight with number %d deleted successfully.", id);
     }
 
-    public List<Flight> findFlightsOneDirectional(String departureAirportId, String arrivalAirportId, String departureDate) {
-        return flightDAO.getResultFromNativeQuery(departureAirportId, arrivalAirportId, departureDate)
-                .stream().filter(f -> bookingDAO.findByFlightId(f.getId()).stream().flatMap(booking -> booking.getPassengers()
-                        .stream()).collect(Collectors.toSet())
-                        .size() < f.getCapacity())
-                        .collect(Collectors.toList());
-    }
-
-    /*
-    TODO: need to add logic based in number of passengers requesting to book
-          so if the bookings size adding the number of these passengers exceeds
-          the flight capacity or equals it the flight should not be fetched at all
-          in both of these methods + the validation if the user requests a return date but the date is null
-          we should return an exception or error message ... plus the security and booking part
-    */
-
-    public List<Flight> findFlightsBiDirectional(String departureAirportId, String arrivalAirportId, String departureDate, String returnDate) {
+    public List<FlightDTO> findFlights(String departureAirportId, String arrivalAirportId, String departureDate, String returnDate) {
         return flightDAO.findFlightsBySuperQuery(departureAirportId, arrivalAirportId, departureDate, returnDate)
-                .stream().filter(f ->
-                                bookingDAO.findByFlightId(f.getId()).stream().flatMap(b -> b.getPassengers().stream())
-                                        .collect(Collectors.toSet())
-                                        .size() < f.getCapacity()).collect(Collectors.toList());
+                .stream().filter(f -> f.getCapacity() >
+                        flightDAO.countOfPassengers(departureAirportId, arrivalAirportId, departureDate, returnDate))
+                .collect(Collectors.toList());
     }
 }
