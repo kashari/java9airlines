@@ -3,8 +3,14 @@ package com.sda.java9.finalproject.security.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter // later to make the entities and mappings
+import javax.persistence.*;
+
+@Getter @Setter @Entity
 public class AppRole {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private RoleName name;
 }
