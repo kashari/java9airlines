@@ -1,10 +1,10 @@
 package com.sda.java9.finalproject.blog.controller;
 
 import com.sda.java9.finalproject.blog.entity.Post;
-import com.sda.java9.finalproject.blog.model.ReviewModel;
 import com.sda.java9.finalproject.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +42,8 @@ public class PostController {
         return String.format("Post with id %d was deleted successfully.", id);
     }
 
-    @PostMapping("/comment")
-    public void addReviewToPost(@RequestBody ReviewModel review){
-        postService.addReviewToPost(review.getId(), review.getBody());
+    @PutMapping("/{id}/comment")
+    public void addReviewToPost(@PathVariable("id") Long id, @RequestBody String review, Authentication authentication){
+        postService.addReviewToPost(id, review ,authentication);
     }
 }

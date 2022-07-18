@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
@@ -33,5 +34,9 @@ public class PassengerDAO implements GenericDAO<PassengerDTO> {
     @Override
     public void deleteById(Long id) {
         passengerRepository.deleteById(id);
+    }
+
+    public void saveAll(Set<PassengerDTO> passengerDTOS){
+        passengerRepository.saveAll(passengerDTOS.stream().map(AirlinesMapper::mapPassengerDTOToEntity).collect(Collectors.toSet()));
     }
 }

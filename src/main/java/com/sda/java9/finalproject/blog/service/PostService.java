@@ -3,7 +3,10 @@ package com.sda.java9.finalproject.blog.service;
 import com.sda.java9.finalproject.blog.entity.Post;
 import com.sda.java9.finalproject.blog.entity.Review;
 import com.sda.java9.finalproject.blog.repository.PostRepository;
+import com.sda.java9.finalproject.security.entity.AppUser;
+import com.sda.java9.finalproject.security.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,6 +17,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final AppUserRepository userRepository;
 
     public List<Post> findAll(){
         return postRepository.findAll();
@@ -32,11 +36,12 @@ public class PostService {
     }
 
     @Transactional
-    public void addReviewToPost(Long id, String body){
+    public void addReviewToPost(Long id, String body, Authentication authentication){
         Post post = postRepository.findById(id).orElseThrow(IllegalStateException::new);
         Review review = new Review();
         review.setBody(body);
-        review.setUser(null); // TODO: need to retrieve the authenticated user somehow or the admin otherwise
+        AppUser appUser = userRepository.findByUsername(authentication.getName()).orElseThrow(IllegalStateException::new);
+        review.setUser(appUser);
         review.setCreatedAt(LocalDateTime.now());
         post.getReviews().add(review);
     }

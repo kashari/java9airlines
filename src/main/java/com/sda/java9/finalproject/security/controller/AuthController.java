@@ -65,6 +65,7 @@ public class AuthController {
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         user.setRoles(roles);
+        user.setIsEnabled(true);
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully!");
     }

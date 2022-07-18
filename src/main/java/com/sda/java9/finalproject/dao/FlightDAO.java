@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
@@ -42,5 +43,9 @@ public class FlightDAO implements GenericDAO<FlightDTO> {
 
     public Integer countOfPassengers(String departureAirportId, String arrivalAirportId, String departureDate, String returnDate){
         return flightRepository.getPassengersCountPerFlight(departureAirportId, arrivalAirportId, departureDate, returnDate);
+    }
+
+    public void saveAll(Set<FlightDTO> flightDTOS){
+        flightRepository.saveAll(flightDTOS.stream().map(AirlinesMapper::mapFlightDTOToEntity).collect(Collectors.toSet()));
     }
 }

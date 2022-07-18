@@ -22,6 +22,8 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppRole> roles = new HashSet<>();
 
+    private Boolean isEnabled;
+
     public AppUser(String username, String email, String password) {
         this.username = username;
         this.email = email;
