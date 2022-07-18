@@ -1,11 +1,9 @@
 package com.sda.java9.finalproject.dao;
 
-import com.sda.java9.finalproject.dto.AppRoleDTO;
 import com.sda.java9.finalproject.dto.AppUserDTO;
 import com.sda.java9.finalproject.generics.AirlinesMapper;
 import com.sda.java9.finalproject.generics.GenericDAO;
-import com.sda.java9.finalproject.repository.AppRoleRepository;
-import com.sda.java9.finalproject.repository.AppUserRepository;
+import com.sda.java9.finalproject.security.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
