@@ -1,13 +1,12 @@
 package com.sda.java9.finalproject.generics;
 
-import com.sda.java9.finalproject.dto.AirportDTO;
-import com.sda.java9.finalproject.dto.BookingDTO;
-import com.sda.java9.finalproject.dto.FlightDTO;
-import com.sda.java9.finalproject.dto.PassengerDTO;
+import com.sda.java9.finalproject.dto.*;
 import com.sda.java9.finalproject.model.Airport;
 import com.sda.java9.finalproject.model.Booking;
 import com.sda.java9.finalproject.model.Flight;
 import com.sda.java9.finalproject.model.Passenger;
+import com.sda.java9.finalproject.security.entity.AppRole;
+import com.sda.java9.finalproject.security.entity.AppUser;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -118,5 +117,48 @@ public class AirlinesMapper {
             booking.setCheckedIn(bookingDTO.isCheckedIn());
         }
         return booking;
+    }
+
+
+    // AppRole mappings
+
+    public static AppRoleDTO mapAppRoleToDTO(AppRole appRole){
+        AppRoleDTO appRoleDTO = new AppRoleDTO();
+        appRoleDTO.setId(appRole.getId());
+        appRoleDTO.setName(appRole.getName());
+        return appRoleDTO;
+    }
+
+    public static AppRole mapAppRoleDTOToEntity(AppRoleDTO appRoleDTO){
+        AppRole appRole = new AppRole();
+        if (Objects.nonNull(appRoleDTO)){
+            appRole.setId(appRoleDTO.getId());
+            appRole.setName(appRoleDTO.getName());
+        }
+        return appRole;
+    }
+
+    // AppUser mappings
+
+    public static AppUserDTO mapAppUserToDTO(AppUser appUser){
+        AppUserDTO appUserDTO = new AppUserDTO();
+        appUserDTO.setId(appUser.getId());
+        appUserDTO.setUsername(appUser.getUsername());
+        appUserDTO.setPassword(appUser.getPassword());
+        appUserDTO.setEmail(appUser.getEmail());
+        appUserDTO.setRoles(appUser.getRoles());
+        return appUserDTO;
+    }
+
+    public static AppUser mapAppUserDTOToEntity(AppUserDTO appUserDTO){
+        AppUser appUser = new AppUser();
+        if (Objects.nonNull(appUserDTO)){
+            appUser.setId(appUserDTO.getId());
+            appUser.setUsername(appUserDTO.getUsername());
+            appUser.setPassword(appUserDTO.getPassword());
+            appUser.setEmail(appUserDTO.getEmail());
+            appUser.setRoles(appUserDTO.getRoles());
+        }
+        return appUser;
     }
 }
