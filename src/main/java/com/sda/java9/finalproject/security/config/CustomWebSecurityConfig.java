@@ -51,7 +51,7 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/").permitAll();
-               // .antMatchers("/").permitAll().anyRequest().authenticated(); -> will use this later according to our business logic
+                //.antMatchers("/admin/**").permitAll().anyRequest().authenticated(); -> will use this later according to our business logic
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

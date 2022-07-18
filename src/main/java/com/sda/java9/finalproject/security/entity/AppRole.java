@@ -1,5 +1,6 @@
 package com.sda.java9.finalproject.security.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
     private String username;
     private String email;

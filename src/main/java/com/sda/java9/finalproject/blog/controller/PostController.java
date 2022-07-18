@@ -4,6 +4,7 @@ import com.sda.java9.finalproject.blog.entity.Post;
 import com.sda.java9.finalproject.blog.model.ReviewModel;
 import com.sda.java9.finalproject.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,13 +24,13 @@ public class PostController {
         return postService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping //@PreAuthorize("hasAuthority('ADMIN')")
     public Post save(@RequestBody Post post){
         postService.save(post);
         return post;
     }
 
-    @PutMapping
+    @PutMapping //@PreAuthorize("hasAuthority('ADMIN')")
     public Post update(@RequestBody Post post){
         postService.save(post);
         return post;
