@@ -1,24 +1,28 @@
-package com.sda.java9.finalproject.dto;
+package com.sda.java9.finalproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter @Setter @NoArgsConstructor
-public class AppUserDTO {
+@Getter @Setter @Entity @NoArgsConstructor
+public class AppUser {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private Set<AppRoleDTO> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<AppRole> roles = new HashSet<>();
+
     private Boolean isEnabled;
 
-    public AppUserDTO(String username, String email, String password) {
+    public AppUser(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;

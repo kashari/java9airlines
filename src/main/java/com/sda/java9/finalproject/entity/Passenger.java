@@ -1,15 +1,22 @@
-package com.sda.java9.finalproject.dto;
+package com.sda.java9.finalproject.entity;
 
-import com.sda.java9.finalproject.entity.PassengerType;
+
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
-public class PassengerDTO {
+import javax.persistence.*;
+
+@Entity @Getter @Setter
+public class Passenger {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String firstName;
     private String lastName;
     private String address;
     private String passportCode;
+
+    @Enumerated(EnumType.STRING)
     private PassengerType passengerType;
 }

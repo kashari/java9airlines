@@ -1,6 +1,6 @@
 package com.sda.java9.finalproject.dto;
 
-import com.sda.java9.finalproject.model.Baggage;
+import com.sda.java9.finalproject.entity.Baggage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +13,5 @@ public class BookingDTO {
     private FlightDTO flight;
     private Baggage baggage;
     private boolean checkedIn;
+    private AppUserDTO appUserDTO;
 }

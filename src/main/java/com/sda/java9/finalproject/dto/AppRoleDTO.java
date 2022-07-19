@@ -1,6 +1,6 @@
 package com.sda.java9.finalproject.dto;
 
-import com.sda.java9.finalproject.security.entity.RoleName;
+import com.sda.java9.finalproject.entity.RoleName;
 import lombok.Getter;
 import lombok.Setter;
 

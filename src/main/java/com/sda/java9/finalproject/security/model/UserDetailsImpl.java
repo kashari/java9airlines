@@ -1,7 +1,8 @@
 package com.sda.java9.finalproject.security.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sda.java9.finalproject.security.entity.AppUser;
+import com.sda.java9.finalproject.dto.AppUserDTO;
+import com.sda.java9.finalproject.entity.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
         this.isEnabled = isEnabled;
     }
-    public static UserDetailsImpl build(AppUser user) {
+    public static UserDetailsImpl build(AppUserDTO user) {
         Set<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toSet());

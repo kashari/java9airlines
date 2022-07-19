@@ -1,19 +1,14 @@
 package com.sda.java9.finalproject.generics;
 
 import com.sda.java9.finalproject.dto.*;
-import com.sda.java9.finalproject.model.Airport;
-import com.sda.java9.finalproject.model.Booking;
-import com.sda.java9.finalproject.model.Flight;
-import com.sda.java9.finalproject.model.Passenger;
-import com.sda.java9.finalproject.security.entity.AppRole;
-import com.sda.java9.finalproject.security.entity.AppUser;
+import com.sda.java9.finalproject.entity.*;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AirlinesMapper {
 
-    // airport mappings
+    // Airport mappings
 
     public static AirportDTO mapAirportToDTO(Airport airport){
         AirportDTO airportDTO = new AirportDTO();
@@ -37,7 +32,7 @@ public class AirlinesMapper {
         return airport;
     }
 
-    // passenger mappings
+    // Passenger mappings
 
     public static PassengerDTO mapPassengerToDTO(Passenger passenger){
         PassengerDTO passengerDTO = new PassengerDTO();
@@ -63,7 +58,7 @@ public class AirlinesMapper {
         return passenger;
     }
 
-    // flight mappings
+    // Flight mappings
 
     public static FlightDTO mapFlightToDTO(Flight flight){
         FlightDTO flightDTO = new FlightDTO();
@@ -95,7 +90,7 @@ public class AirlinesMapper {
         return flight;
     }
 
-    // booking mappings
+    // Booking mappings
 
     public static BookingDTO mapBookingToDTO(Booking booking){
         BookingDTO bookingDTO = new BookingDTO();
@@ -104,6 +99,7 @@ public class AirlinesMapper {
         bookingDTO.setPassengers(booking.getPassengers().stream().map(AirlinesMapper::mapPassengerToDTO).collect(Collectors.toSet()));
         bookingDTO.setBaggage(booking.getBaggage());
         bookingDTO.setCheckedIn(booking.isCheckedIn());
+        bookingDTO.setAppUserDTO(AirlinesMapper.mapAppUserToDTO(booking.getAppUser()));
         return bookingDTO;
     }
 
@@ -115,6 +111,7 @@ public class AirlinesMapper {
             booking.setPassengers(bookingDTO.getPassengers().stream().map(AirlinesMapper::mapPassengerDTOToEntity).collect(Collectors.toSet()));
             booking.setBaggage(bookingDTO.getBaggage());
             booking.setCheckedIn(bookingDTO.isCheckedIn());
+            booking.setAppUser(AirlinesMapper.mapAppUserDTOToEntity(bookingDTO.getAppUserDTO()));
         }
         return booking;
     }
@@ -142,11 +139,14 @@ public class AirlinesMapper {
 
     public static AppUserDTO mapAppUserToDTO(AppUser appUser){
         AppUserDTO appUserDTO = new AppUserDTO();
-        appUserDTO.setId(appUser.getId());
-        appUserDTO.setUsername(appUser.getUsername());
-        appUserDTO.setPassword(appUser.getPassword());
-        appUserDTO.setEmail(appUser.getEmail());
-        appUserDTO.setRoles(appUser.getRoles());
+        if (Objects.nonNull(appUser)) {
+            appUserDTO.setId(appUser.getId());
+            appUserDTO.setUsername(appUser.getUsername());
+            appUserDTO.setPassword(appUser.getPassword());
+            appUserDTO.setEmail(appUser.getEmail());
+            appUserDTO.setRoles(appUser.getRoles().stream().map(AirlinesMapper::mapAppRoleToDTO).collect(Collectors.toSet()));
+            appUserDTO.setIsEnabled(appUser.getIsEnabled());
+        }
         return appUserDTO;
     }
 
@@ -157,8 +157,59 @@ public class AirlinesMapper {
             appUser.setUsername(appUserDTO.getUsername());
             appUser.setPassword(appUserDTO.getPassword());
             appUser.setEmail(appUserDTO.getEmail());
-            appUser.setRoles(appUserDTO.getRoles());
+            appUser.setRoles(appUserDTO.getRoles().stream().map(AirlinesMapper::mapAppRoleDTOToEntity).collect(Collectors.toSet()));
+            appUser.setIsEnabled(appUserDTO.getIsEnabled());
         }
         return appUser;
+    }
+
+    // Post mappings
+
+    public static PostDTO mapPostToDTO(Post post){
+        PostDTO postDTO = new PostDTO();
+        postDTO.setId(post.getId());
+        postDTO.setTitle(post.getTitle());
+        postDTO.setDescription(post.getDescription());
+        postDTO.setAuthor(AirlinesMapper.mapAppUserToDTO(post.getAuthor()));
+        postDTO.setReviews(post.getReviews().stream().map(AirlinesMapper::mapReviewToDTO).collect(Collectors.toList()));
+        postDTO.setCreatedAt(post.getCreatedAt());
+        return postDTO;
+    }
+
+    public static Post mapPostDTOToEntity(PostDTO postDTO){
+        Post post = new Post();
+        if (Objects.nonNull(postDTO)) {
+            post.setId(postDTO.getId());
+            post.setTitle(postDTO.getTitle());
+            post.setDescription(postDTO.getDescription());
+            post.setAuthor(AirlinesMapper.mapAppUserDTOToEntity(postDTO.getAuthor()));
+            if (Objects.nonNull(postDTO.getReviews())){
+                post.setReviews(postDTO.getReviews().stream().map(AirlinesMapper::mapReviewDTOToEntity).collect(Collectors.toList()));
+            }
+            post.setCreatedAt(postDTO.getCreatedAt());
+        }
+        return post;
+    }
+
+    // Review mappings
+
+    public static ReviewDTO mapReviewToDTO(Review review){
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setId(review.getId());
+        reviewDTO.setBody(review.getBody());
+        reviewDTO.setUser(AirlinesMapper.mapAppUserToDTO(review.getUser()));
+        reviewDTO.setCreatedAt(review.getCreatedAt());
+        return reviewDTO;
+    }
+
+    public static Review mapReviewDTOToEntity(ReviewDTO reviewDTO){
+        Review review = new Review();
+        if (Objects.nonNull(reviewDTO)) {
+            review.setId(reviewDTO.getId());
+            review.setBody(reviewDTO.getBody());
+            review.setUser(AirlinesMapper.mapAppUserDTOToEntity(reviewDTO.getUser()));
+            review.setCreatedAt(reviewDTO.getCreatedAt());
+        }
+        return review;
     }
 }

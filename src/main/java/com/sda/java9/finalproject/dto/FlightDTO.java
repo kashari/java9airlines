@@ -1,6 +1,6 @@
 package com.sda.java9.finalproject.dto;
 
-import com.sda.java9.finalproject.model.FlightClass;
+import com.sda.java9.finalproject.entity.FlightClass;
 import lombok.Getter;
 import lombok.Setter;
 

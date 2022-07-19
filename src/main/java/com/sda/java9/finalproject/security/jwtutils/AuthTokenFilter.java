@@ -1,6 +1,6 @@
 package com.sda.java9.finalproject.security.jwtutils;
 
-import com.sda.java9.finalproject.security.service.UserDetailsServiceImpl;
+import com.sda.java9.finalproject.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

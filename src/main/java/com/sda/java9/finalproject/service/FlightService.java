@@ -3,7 +3,7 @@ package com.sda.java9.finalproject.service;
 import com.sda.java9.finalproject.dao.AirportDAO;
 import com.sda.java9.finalproject.dao.FlightDAO;
 import com.sda.java9.finalproject.dto.FlightDTO;
-import com.sda.java9.finalproject.model.FlightClass;
+import com.sda.java9.finalproject.entity.FlightClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

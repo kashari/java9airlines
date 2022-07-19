@@ -1,5 +1,6 @@
 package com.sda.java9.finalproject.dao;
 
+import com.sda.java9.finalproject.dto.AppUserDTO;
 import com.sda.java9.finalproject.dto.BookingDTO;
 import com.sda.java9.finalproject.generics.AirlinesMapper;
 import com.sda.java9.finalproject.generics.GenericDAO;
@@ -38,5 +39,10 @@ public class BookingDAO implements GenericDAO<BookingDTO> {
 
     public List<BookingDTO> findByFlightId(Long id){
         return bookingRepository.findByFlightId(id).stream().map(AirlinesMapper::mapBookingToDTO).collect(Collectors.toList());
+    }
+
+    public List<BookingDTO> filterBookingsByAuthUser(AppUserDTO userDTO) {
+        return bookingRepository.findBookingByAppUser(AirlinesMapper.mapAppUserDTOToEntity(userDTO))
+                .stream().map(AirlinesMapper::mapBookingToDTO).collect(Collectors.toList());
     }
 }
