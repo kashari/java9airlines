@@ -3,6 +3,7 @@ package com.sda.java9.finalproject.controller;
 import com.sda.java9.finalproject.dto.FlightDTO;
 import com.sda.java9.finalproject.service.FlightService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @RestController @RequestMapping("/flights") @RequiredArgsConstructor @CrossOrigin(value = "http://localhost:4200")
@@ -46,11 +48,11 @@ public class FlightController {
     }
 
     @PostMapping("/bulk-create")
-    public String bulkCreateUsers(@Valid @RequestBody MultipartFile multipartFile) throws IOException, ParseException {
-        if (Objects.nonNull(multipartFile)){
-            flightService.saveAll(multipartFile.getInputStream());
-            return "Flights created successfully";
+    public ResponseEntity<?> bulkCreateUsers(@Valid @RequestBody MultipartFile file) throws IOException, ParseException {
+        if (Objects.nonNull(file)){
+            flightService.saveAll(file.getInputStream());
+            return ResponseEntity.ok().body("Flights created successfully.");
         }
-        return "Something went wrong";
+        return ResponseEntity.of(Optional.of("Something went wrong."));
     }
 }

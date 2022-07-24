@@ -30,13 +30,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         if (appRoleRepository.count() == 0) {
             Set<AppRole> roles = new HashSet<>();
             AppRole USER = new AppRole();
-            USER.setId(1L);
             USER.setName(RoleName.USER);
             AppRole ADMIN = new AppRole();
-            ADMIN.setId(2L);
             ADMIN.setName(RoleName.ADMIN);
             AppRole ROOT = new AppRole();
-            ROOT.setId(3L);
             ROOT.setName(RoleName.ROOT);
             roles.add(USER);
             roles.add(ADMIN);
@@ -51,7 +48,9 @@ public class DatabaseSeeder implements CommandLineRunner {
             root.setUsername("superuser");
             root.setEmail("superuser@java9airlines.com");
             root.setPassword(passwordEncoder.encode("morethanroot"));
+            root.setIsEnabled(true);
             root.getRoles().add(appRoleRepository.findByName(RoleName.ROOT).orElse(null));
+            root.getRoles().add(appRoleRepository.findByName(RoleName.ADMIN).orElse(null));
             appUserRepository.save(root);
         }
     }

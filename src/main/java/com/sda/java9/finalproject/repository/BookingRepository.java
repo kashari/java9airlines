@@ -15,5 +15,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query(value = "SELECT * FROM booking WHERE flight_id=:flightId;", nativeQuery = true)
     List<Booking> findByFlightId(@Param("flightId") Long flightId);
 
-    List<Booking> findBookingByAppUser(AppUser appUser);
+    List<Booking> findBookingByUser(AppUser appUser);
 }

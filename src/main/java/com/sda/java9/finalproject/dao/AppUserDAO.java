@@ -5,6 +5,7 @@ import com.sda.java9.finalproject.generics.AirlinesMapper;
 import com.sda.java9.finalproject.generics.GenericDAO;
 import com.sda.java9.finalproject.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,6 +42,14 @@ public class AppUserDAO implements GenericDAO<AppUserDTO> {
     }
 
     public AppUserDTO findByUsername(String username){
-        return appUserRepository.findByUsername(username).map(AirlinesMapper::mapAppUserToDTO).orElse(null);
+        return appUserRepository.findByUsername(username).map(AirlinesMapper::mapAppUserToDTO).orElseThrow(() -> new UsernameNotFoundException("User does not exist."));
+    }
+
+    public boolean existsByUsername(String username) {
+        return appUserRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return appUserRepository.existsByEmail(email);
     }
 }

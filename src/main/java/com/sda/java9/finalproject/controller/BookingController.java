@@ -24,20 +24,26 @@ public class BookingController {
     }
 
     @PostMapping
-    public BookingDTO save(@RequestBody BookingDTO booking, Authentication authentication){
-        bookingService.save(booking, authentication);
+    public BookingDTO save(@RequestBody BookingDTO booking, Authentication authentication) {
+            bookingService.save(booking, authentication);
         return booking;
     }
 
     @PutMapping
     public BookingDTO checkInBooking(@RequestBody BookingDTO bookingDTO, Authentication authentication){
         bookingDTO.setCheckedIn(true);
-        bookingService.save(bookingDTO, authentication);
+            bookingService.save(bookingDTO, authentication);
         return bookingDTO;
     }
 
     @GetMapping("/my-bookings")
     public List<BookingDTO> findByAuthUser(Authentication authentication){
         return bookingService.filterBookingsByUser(authentication);
+    }
+
+    @DeleteMapping("/{id}")
+    public String cancelBooking(@PathVariable("id") Long id){
+        bookingService.deleteById(id);
+        return String.format("Booking %d canceled successfully.", id);
     }
 }

@@ -72,13 +72,14 @@ public class FlightService {
             FlightDTO flightDTO = new FlightDTO();
             flightDTO.setDepartureAirport(airportDAO.findById(Long.valueOf(columns[0])));
             flightDTO.setArrivalAirport(airportDAO.findById(Long.valueOf(columns[1])));
-            flightDTO.setDepartureDate(new SimpleDateFormat("yyyy/MM/dd").parse(columns[2]));
-            flightDTO.setReturnDate(new SimpleDateFormat("yyyy/MM/dd").parse(columns[3]));
+            flightDTO.setDepartureDate(new SimpleDateFormat("yyyy-MM-dd").parse(columns[2]));
+            flightDTO.setReturnDate(new SimpleDateFormat("yyyy-MM-dd").parse(columns[3]));
             flightDTO.setBiDirectional(Boolean.parseBoolean(columns[4]));
             flightDTO.setCapacity(Integer.parseInt(columns[5]));
             flightDTO.setFlightPrice(Integer.parseInt(columns[6]));
             flightDTO.setFlightClass(FlightClass.valueOf(columns[7]));
             flights.add(flightDTO);
+            count++;
         }
         return flights;
     }

@@ -1,39 +1,34 @@
 package com.sda.java9.finalproject.controller;
 
+import com.sda.java9.finalproject.dao.AppRoleDAO;
+import com.sda.java9.finalproject.dao.AppUserDAO;
 import com.sda.java9.finalproject.dto.AppRoleDTO;
 import com.sda.java9.finalproject.dto.AppUserDTO;
-import com.sda.java9.finalproject.entity.AppRole;
-import com.sda.java9.finalproject.entity.AppUser;
 import com.sda.java9.finalproject.entity.RoleName;
-import com.sda.java9.finalproject.generics.AirlinesMapper;
 import com.sda.java9.finalproject.security.jwtutils.JwtUtil;
 import com.sda.java9.finalproject.security.model.LoginModel;
 import com.sda.java9.finalproject.security.model.SignupModel;
-import com.sda.java9.finalproject.repository.AppRoleRepository;
-import com.sda.java9.finalproject.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.Valid;
 
-@RestController @RequestMapping("/api/auth") @RequiredArgsConstructor
+@RestController @RequestMapping("/api/auth") @RequiredArgsConstructor @CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "token")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final AppUserRepository userRepository;
-    private final AppRoleRepository roleRepository;
+    private final AppUserDAO userDAO;
+    private final AppRoleDAO roleDAO;
     private final PasswordEncoder encoder;
     private final JwtUtil jwtUtils;
 
@@ -44,18 +39,27 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-        return ResponseEntity.ok("Bearer " +jwt);
+        AppUserDTO user = userDAO.findByUsername(jwtUtils.getUserNameFromJwtToken(jwt));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("token", "Bearer "+jwt);
+        return ResponseEntity.ok().headers(headers).body(user);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(){
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return ResponseEntity.ok("Logout successful.");
     }
 
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupModel signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userDAO.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body("Error: Username is already taken!");
         }
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userDAO.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body("Error: Email is already in use!");
@@ -64,12 +68,11 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
         Set<AppRoleDTO> roles = new HashSet<>();
-            AppRoleDTO userRole = roleRepository.findByName(RoleName.USER).map(AirlinesMapper::mapAppRoleToDTO)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            AppRoleDTO userRole = roleDAO.findByName(RoleName.USER);
             roles.add(userRole);
         user.setRoles(roles);
         user.setIsEnabled(true);
-        userRepository.save(AirlinesMapper.mapAppUserDTOToEntity(user));
-        return ResponseEntity.ok("User registered successfully!");
+        userDAO.save(user);
+        return ResponseEntity.ok(user);
     }
 }
