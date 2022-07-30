@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
+
     @Query(value = "SELECT * FROM flight " +
             "WHERE departure_airport_id=:departureAirportId " +
             "AND arrival_airport_id=:arrivalAirportId " +
