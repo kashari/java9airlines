@@ -39,9 +39,9 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-        AppUserDTO user = userDAO.findByUsername(jwtUtils.getUserNameFromJwtToken(jwt));
         HttpHeaders headers = new HttpHeaders();
-        headers.add("token", "Bearer "+jwt);
+        headers.add("token", "Bearer " +jwt);
+        AppUserDTO user = userDAO.findByUsername(loginRequest.getUsername());
         return ResponseEntity.ok().headers(headers).body(user);
     }
 
@@ -73,6 +73,6 @@ public class AuthController {
         user.setRoles(roles);
         user.setIsEnabled(true);
         userDAO.save(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok("Registration successful.");
     }
 }

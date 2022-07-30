@@ -174,6 +174,7 @@ public class AirlinesMapper {
         postDTO.setId(post.getId());
         postDTO.setTitle(post.getTitle());
         postDTO.setDescription(post.getDescription());
+        postDTO.setImageURL(post.getImageURL());
         postDTO.setAuthor(AirlinesMapper.mapAppUserToDTO(post.getAuthor()));
         postDTO.setReviews(post.getReviews().stream().map(AirlinesMapper::mapReviewToDTO).collect(Collectors.toList()));
         postDTO.setCreatedAt(post.getCreatedAt());
@@ -186,6 +187,7 @@ public class AirlinesMapper {
             post.setId(postDTO.getId());
             post.setTitle(postDTO.getTitle());
             post.setDescription(postDTO.getDescription());
+            post.setImageURL(postDTO.getImageURL());
             post.setAuthor(AirlinesMapper.mapAppUserDTOToEntity(postDTO.getAuthor()));
             if (Objects.nonNull(postDTO.getReviews())){
                 post.setReviews(postDTO.getReviews().stream().map(AirlinesMapper::mapReviewDTOToEntity).collect(Collectors.toList()));

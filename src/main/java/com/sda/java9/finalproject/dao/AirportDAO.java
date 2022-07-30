@@ -39,4 +39,8 @@ public class AirportDAO implements GenericDAO<AirportDTO> {
     public void saveAll(Set<AirportDTO> airportDTOS){
         airportRepository.saveAll(airportDTOS.stream().map(AirlinesMapper::mapAirportDTOToEntity).collect(Collectors.toSet()));
     }
+
+    public Boolean existsByAirportCode(String airportCode){
+        return airportRepository.existsByAirportCode(airportCode);
+    }
 }

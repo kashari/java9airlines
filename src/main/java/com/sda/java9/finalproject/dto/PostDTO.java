@@ -11,6 +11,7 @@ public class PostDTO {
     private Long id;
     private String title;
     private String description;
+    private String imageURL;
     private AppUserDTO author;
     private List<ReviewDTO> reviews;
     private LocalDateTime createdAt;

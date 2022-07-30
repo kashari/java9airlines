@@ -59,11 +59,16 @@ public class BookingService {
                 
                 We are delighted once again doing business with you.
                 We thank you for the booking made and note that in this email you will find all the details and can be used as the online ticket.
+                
+                You are traveling from %s to %s day: %s.
+                
                 %s
-                With a total to pay from: %f EUR
+                
+                With a total to pay from: %.2f EUR
                 
                 We wish you a nice trip.
-                """, allPassengers(booking.getPassengers()), booking.getFlight().getFlightPrice()));
+                """, booking.getFlight().getDepartureAirport().getCity(), booking.getFlight().getArrivalAirport().getCity(),
+                booking.getFlight().getDepartureDate(), allPassengers(booking.getPassengers()), booking.getFlight().getFlightPrice()));
         mailSender.send(message);
     }
 

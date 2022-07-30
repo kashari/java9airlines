@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.sda.java9.finalproject.security.config.URLAntMatcher;
 
 @Configuration @EnableWebSecurity @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
@@ -50,8 +51,8 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/").permitAll();
-                //.antMatchers("/admin/**").permitAll().anyRequest().authenticated(); -> will use this later according to our business logic
+                .authorizeRequests().antMatchers(URLAntMatcher.ALLOWED_ENDPOINTS).permitAll()
+                .antMatchers(URLAntMatcher.RESTRICTED_ENDPOINTS).permitAll().anyRequest().authenticated(); //-> will use this later according to our business logic
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
