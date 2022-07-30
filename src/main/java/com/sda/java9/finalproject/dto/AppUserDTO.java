@@ -13,6 +13,8 @@ public class AppUserDTO {
     private Long id;
     private String username;
     private String email;
+
+    private String profession;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Set<AppRoleDTO> roles = new HashSet<>();

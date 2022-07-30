@@ -17,6 +17,8 @@ public class AppUser {
     private String email;
     private String password;
 
+    private String profession;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<AppRole> roles = new HashSet<>();
 

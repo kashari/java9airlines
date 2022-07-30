@@ -5,12 +5,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity @Getter @Setter
 public class Booking {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private UUID uuid;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Passenger> passengers;
@@ -22,7 +25,7 @@ public class Booking {
     private Baggage baggage;
 
     @ManyToOne
-    private AppUser appUser;
+    private AppUser user;
 
     private boolean checkedIn;
 

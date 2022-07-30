@@ -95,11 +95,12 @@ public class AirlinesMapper {
     public static BookingDTO mapBookingToDTO(Booking booking){
         BookingDTO bookingDTO = new BookingDTO();
         bookingDTO.setId(booking.getId());
+        bookingDTO.setUuid(booking.getUuid());
         bookingDTO.setFlight(AirlinesMapper.mapFlightToDTO(booking.getFlight()));
         bookingDTO.setPassengers(booking.getPassengers().stream().map(AirlinesMapper::mapPassengerToDTO).collect(Collectors.toSet()));
         bookingDTO.setBaggage(booking.getBaggage());
         bookingDTO.setCheckedIn(booking.isCheckedIn());
-        bookingDTO.setAppUserDTO(AirlinesMapper.mapAppUserToDTO(booking.getAppUser()));
+        bookingDTO.setUser(AirlinesMapper.mapAppUserToDTO(booking.getUser()));
         return bookingDTO;
     }
 
@@ -107,11 +108,12 @@ public class AirlinesMapper {
         Booking booking = new Booking();
         if (Objects.nonNull(bookingDTO)){
             booking.setId(bookingDTO.getId());
+            booking.setUuid(bookingDTO.getUuid());
             booking.setFlight(AirlinesMapper.mapFlightDTOToEntity(bookingDTO.getFlight()));
             booking.setPassengers(bookingDTO.getPassengers().stream().map(AirlinesMapper::mapPassengerDTOToEntity).collect(Collectors.toSet()));
             booking.setBaggage(bookingDTO.getBaggage());
             booking.setCheckedIn(bookingDTO.isCheckedIn());
-            booking.setAppUser(AirlinesMapper.mapAppUserDTOToEntity(bookingDTO.getAppUserDTO()));
+            booking.setUser(AirlinesMapper.mapAppUserDTOToEntity(bookingDTO.getUser()));
         }
         return booking;
     }
@@ -144,6 +146,7 @@ public class AirlinesMapper {
             appUserDTO.setUsername(appUser.getUsername());
             appUserDTO.setPassword(appUser.getPassword());
             appUserDTO.setEmail(appUser.getEmail());
+            appUserDTO.setProfession(appUser.getProfession());
             appUserDTO.setRoles(appUser.getRoles().stream().map(AirlinesMapper::mapAppRoleToDTO).collect(Collectors.toSet()));
             appUserDTO.setIsEnabled(appUser.getIsEnabled());
         }
@@ -157,6 +160,7 @@ public class AirlinesMapper {
             appUser.setUsername(appUserDTO.getUsername());
             appUser.setPassword(appUserDTO.getPassword());
             appUser.setEmail(appUserDTO.getEmail());
+            appUser.setProfession(appUserDTO.getProfession());
             appUser.setRoles(appUserDTO.getRoles().stream().map(AirlinesMapper::mapAppRoleDTOToEntity).collect(Collectors.toSet()));
             appUser.setIsEnabled(appUserDTO.getIsEnabled());
         }
@@ -170,6 +174,7 @@ public class AirlinesMapper {
         postDTO.setId(post.getId());
         postDTO.setTitle(post.getTitle());
         postDTO.setDescription(post.getDescription());
+        postDTO.setImageURL(post.getImageURL());
         postDTO.setAuthor(AirlinesMapper.mapAppUserToDTO(post.getAuthor()));
         postDTO.setReviews(post.getReviews().stream().map(AirlinesMapper::mapReviewToDTO).collect(Collectors.toList()));
         postDTO.setCreatedAt(post.getCreatedAt());
@@ -182,6 +187,7 @@ public class AirlinesMapper {
             post.setId(postDTO.getId());
             post.setTitle(postDTO.getTitle());
             post.setDescription(postDTO.getDescription());
+            post.setImageURL(postDTO.getImageURL());
             post.setAuthor(AirlinesMapper.mapAppUserDTOToEntity(postDTO.getAuthor()));
             if (Objects.nonNull(postDTO.getReviews())){
                 post.setReviews(postDTO.getReviews().stream().map(AirlinesMapper::mapReviewDTOToEntity).collect(Collectors.toList()));

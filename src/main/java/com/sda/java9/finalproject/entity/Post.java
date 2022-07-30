@@ -14,12 +14,13 @@ public class Post {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String description;  // basically the content separated in paragraphs
+    private String description;
+    private String imageURL;
     @ManyToOne
-    private AppUser author; // only users with role staff will have access to create this entity
+    private AppUser author;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Review> reviews; // this is a typical post-comment relationship
+    private List<Review> reviews;
     @CreationTimestamp
-    private LocalDateTime createdAt; // decorator for when was created and may be used for sorting
+    private LocalDateTime createdAt;
 
 }

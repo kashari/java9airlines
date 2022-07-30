@@ -1,6 +1,7 @@
 package com.sda.java9.finalproject.dao;
 
 import com.sda.java9.finalproject.dto.AppRoleDTO;
+import com.sda.java9.finalproject.entity.RoleName;
 import com.sda.java9.finalproject.generics.AirlinesMapper;
 import com.sda.java9.finalproject.generics.GenericDAO;
 import com.sda.java9.finalproject.repository.AppRoleRepository;
@@ -38,5 +39,9 @@ public class AppRoleDAO implements GenericDAO<AppRoleDTO> {
 
     public void saveAll(Set<AppRoleDTO> appRoleDTOS){
         appRoleRepository.saveAll(appRoleDTOS.stream().map(AirlinesMapper::mapAppRoleDTOToEntity).collect(Collectors.toSet()));
+    }
+
+    public AppRoleDTO findByName(RoleName name) {
+        return appRoleRepository.findByName(name).map(AirlinesMapper::mapAppRoleToDTO).orElseThrow(() -> new IllegalStateException("Role not found."));
     }
 }

@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service @RequiredArgsConstructor
 public class AirportService {
@@ -38,7 +39,7 @@ public class AirportService {
     }
 
     public void saveAll(InputStream inputStream) throws IOException {
-        Set<AirportDTO> airportDTOS = readInputStreamHere(inputStream);
+        Set<AirportDTO> airportDTOS = readInputStreamHere(inputStream).stream().filter(a -> !airportDAO.existsByAirportCode(a.getAirportCode())).collect(Collectors.toSet());
         airportDAO.saveAll(airportDTOS);
     }
 

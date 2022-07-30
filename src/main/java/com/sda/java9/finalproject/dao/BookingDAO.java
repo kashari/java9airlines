@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component @RequiredArgsConstructor
@@ -42,7 +41,7 @@ public class BookingDAO implements GenericDAO<BookingDTO> {
     }
 
     public List<BookingDTO> filterBookingsByAuthUser(AppUserDTO userDTO) {
-        return bookingRepository.findBookingByAppUser(AirlinesMapper.mapAppUserDTOToEntity(userDTO))
+        return bookingRepository.findBookingByUser(AirlinesMapper.mapAppUserDTOToEntity(userDTO))
                 .stream().map(AirlinesMapper::mapBookingToDTO).collect(Collectors.toList());
     }
 }
